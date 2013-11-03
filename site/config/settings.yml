@@ -1,7 +1,7 @@
 Default: &defaults
   host: "*4" # any IPv4 host
-  port: 5000
-  approot: "http://localhost:5000"
+  port: 6000
+  approot: "http://localhost:6000"
   copyright: Insert copyright statement here
   #analytics: UA-YOURCODE
 
@@ -16,5 +16,5 @@ Staging:
 
 Production:
   <<: *defaults
-  port: 5100
+  port: 6100
   approot: "http://melpon.org/mpidl"
