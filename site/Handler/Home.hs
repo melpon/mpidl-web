@@ -6,7 +6,6 @@ module Handler.Home
 
 import Import
 import qualified Yesod                                  as Y
-import qualified Data.Maybe                             as Maybe
 import qualified Data.Text                              as T
 import qualified Data.Text.Lazy                         as TL
 import qualified Filesystem                             as FS
@@ -39,9 +38,20 @@ getHomeR = do
         Y.setTitle "MessagePack IDL Code Generator"
         $(widgetFile "homepage")
 
+sanitize :: T.Text -> T.Text
+sanitize name =
+  let name' = T.filter (\c -> isAlpha c || isDigit c || any (c==) ['_', '-', '.']) name
+   in if T.length name' == 0
+        then "noname"
+        else name'
+  where
+    isAlpha c = 'a' <= c && c <= 'z' ||
+                'A' <= c && c <= 'Z'
+    isDigit c = '0' <= c && c <= '9'
+
 postHomeR :: Handler (Y.ContentType, Y.Content)
 postHomeR = do
-  (Maybe.fromMaybe "noname" -> name, source, lang, namespace) <- Y.runInputPost $ (,,,)
+  (maybe "noname" sanitize -> name, source, lang, namespace) <- Y.runInputPost $ (,,,)
     <$> Y.iopt Y.textField "name"
     <*> Y.ireq Y.textField "source"
     <*> Y.ireq Y.textField "lang"
@@ -58,8 +68,8 @@ postHomeR = do
   
   archive <- Shelly.shelly $ do
     Shelly.withTmpDir $ \tmppath -> do
-      let tmpIdlname = tmppath </> Shelly.fromText idlname
       let tmpName = tmppath </> name
+      let tmpIdlname = tmppath </> Shelly.fromText idlname
       let tmpTarname = tmppath </> Shelly.fromText tarname
       Shelly.writefile tmpIdlname $ TL.fromStrict source
       Shelly.run_ "msgpack-idl/bin/mpidl" $ [TL.fromStrict lang, "-o", Shelly.toTextIgnore tmpName, Shelly.toTextIgnore tmpIdlname] ++ opts
