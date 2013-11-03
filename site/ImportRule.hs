@@ -23,9 +23,12 @@ import qualified Data.IORef                             as IORef
 import qualified Data.List                              as List
 import qualified Data.Maybe                             as Maybe
 import qualified Data.Text                              as T
+import qualified Data.Text.Lazy                         as TL
 import qualified Data.Text.Encoding                     as TE
 import qualified Data.Word                              as Word
 import qualified Data.Yaml                              as Yaml
+
+import qualified Filesystem                             as FS
 
 import qualified Language.Haskell.TH                    as TH
 import qualified Language.Haskell.TH.Syntax             as THS
@@ -33,6 +36,8 @@ import qualified Language.Haskell.TH.Syntax             as THS
 import qualified Network.HTTP.Conduit                   as HConduit
 import qualified Network.Wai.Middleware.RequestLogger   as RequestLogger
 import qualified Network.Wai.Handler.Warp               as Warp
+
+import qualified Shelly                                 as Shelly
 
 import qualified System.Directory                       as Directory
 import qualified System.Exit                            as Exit
