@@ -4,3 +4,4 @@
 /robots.txt RobotsR GET
 
 / HomeR GET POST
+/api ApiR POST

@@ -1,0 +1,60 @@
+posting = false;
+
+function postIf() {
+  if (!posting) {
+    posting = true;
+    post();
+  }
+}
+
+function post() {
+  var url = $('#preview').attr('url');
+  var data = {
+      "name": $('#name').val(),
+      "source": $('#source').val(),
+      "lang": $('#lang').val(),
+      "namespace": $('#namespace').val(),
+  };
+  $.ajax({
+    url: url,
+    type: 'POST',
+    data: JSON.stringify(data),
+    dataType: 'json',
+    success: function(json) {
+      $('#preview').empty();
+      var table = $('<table class="table">');
+      var header = $('<tr>');
+      for (var i = 0; i < json.length; i++) {
+        header.append($('<th>').append($('<pre>').text(json[i]['name'])));
+      }
+      var data = $('<tr>');
+      for (var i = 0; i < json.length; i++) {
+        data.append($('<td>').append($('<pre>').text(json[i]['data'])));
+      }
+      table.append(header)
+           .append(data);
+      $('#preview').append(table);
+
+      $('#submit').removeClass('disabled');
+      $('#submit').attr('disabled', false);
+      $('#text-error').remove();
+    },
+    error: function() {
+      $('#submit').addClass('disabled');
+      $('#submit').attr('disabled', true);
+      $('#text-error').remove();
+      $('#preview').before(
+        $('<div id="text-error">').append(
+          $('<p class="text-error">').text('ERROR is occured')));
+    },
+    complete: function() {
+      posting = false;
+    },
+  });
+}
+
+$(function() {
+  $('#name, #source, #lang, #namespace').change(function() { postIf(); });
+  $('#name, #source, #namespace').keyup(function() { postIf(); });
+  postIf();
+});

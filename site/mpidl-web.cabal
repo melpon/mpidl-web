@@ -69,6 +69,8 @@ library
 
                  , system-fileio
                  , shelly                        == 0.15.4.1
+                 , containers
+                 , system-filepath
 
 executable         mpidl-web
     if flag(library-only)

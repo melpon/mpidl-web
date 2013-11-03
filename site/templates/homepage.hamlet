@@ -2,19 +2,22 @@
 
 <form.well method=post action=@{HomeR}>
   <label>IDL Name
-    <input type="text" name="name">
+    <input type="text" name="name" #name>
   <label>IDL Source
-    <textarea.input-xxlarge rows="20" name="source">
+    <textarea.input-xxlarge rows="20" name="source" #source>
       #{defaultCode}
 
   <label>Language to Generate
-    <select name="lang">
+    <select name="lang" #lang>
       <option value="cpp">C++
       <option value="java">Java
       <option value="python">Python
       <option value="ruby">Ruby
+      <option value="haskell">Haskell
 
   <label>Namespace / Package name / Module name
-    <input type="text" name="namespace">
+    <input type="text" name="namespace" #namespace>
   
-  <button.btn type="submit">Generate
+  <div #preview url=@{ApiR}>
+
+  <button.btn .btn-primary #submit type="submit">Download

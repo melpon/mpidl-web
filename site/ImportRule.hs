@@ -21,6 +21,7 @@ import qualified Data.Conduit.List                      as ConduitL
 import qualified Data.Default                           as Default
 import qualified Data.IORef                             as IORef
 import qualified Data.List                              as List
+import qualified Data.Map                               as Map
 import qualified Data.Maybe                             as Maybe
 import qualified Data.Text                              as T
 import qualified Data.Text.Lazy                         as TL
