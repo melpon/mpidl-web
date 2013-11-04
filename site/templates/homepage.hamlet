@@ -3,6 +3,8 @@
 <form.well method=post action=@{HomeR}>
   <label>IDL Name
     <input type="text" name="name" #name>
+  <div>
+    <p>MessagePack IDL Specification is <a href="https://github.com/msgpack/msgpack-haskell/blob/master/msgpack-idl/Specification.md" target="_blank">here</a>.
   <label>IDL Source
     <textarea.input-xxlarge rows="20" name="source" #source>
       #{defaultCode}
