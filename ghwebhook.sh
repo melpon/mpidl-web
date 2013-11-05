@@ -8,10 +8,14 @@ set -ex
 cd mpidl-web/
 git checkout master
 git pull
+git submodule update -i
+
+cd msgpack-haskell/msgpack-idl
+cabal-dev install --reinstall -s ../../site/msgpack-idl
+cd ../..
 
 cd site
 rm -r dist/
-cabal-dev install msgpack-idl -s msgpack-idl
 cabal-dev install
 '
 stop mpidl-web || true

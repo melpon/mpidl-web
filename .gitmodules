@@ -1,0 +1,3 @@
+[submodule "msgpack-haskell"]
+	path = msgpack-haskell
+	url = https://github.com/melpon/msgpack-haskell
