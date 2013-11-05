@@ -65,6 +65,7 @@ runMpidl name source lang namespace resultFunc = do
         ("cpp",     Just ns) -> ["-n", ns]
         ("java",    Just pn) -> ["-p", pn]
         ("ruby",    Just mn) -> ["-m", mn]
+        ("python",  Just pn) -> ["-p", pn]
         ("haskell", Just mn) -> ["-m", mn]
         _ -> []
   
