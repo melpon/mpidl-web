@@ -8,6 +8,7 @@ module Handler.Home
 import Import
 import qualified Yesod                                  as Y
 import qualified Data.Aeson.Types                       as AesonTypes
+import qualified Data.List                              as List
 import qualified Data.Maybe                             as Maybe
 import qualified Data.Text                              as T
 import qualified Data.Text.Lazy                         as TL
@@ -113,7 +114,7 @@ postApiR = do
   where
     returnFiles name tmppath = do
       filenames <- TL.lines <$> (Shelly.run "find" [Shelly.toTextIgnore $ tmppath </> name, "-type", "f"])
-      mapM (readFile tmppath) filenames
+      mapM (readFile tmppath) (List.sort filenames)
     readFile tmppath filename = do
       let filename' = Shelly.fromText filename
       filedata <- Shelly.readfile filename'
